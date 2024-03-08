@@ -11,6 +11,16 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 
 """
+import csv
+
+# csv path
+file_name = 'data.csv'
+# open csv
+
+with open(file_name, 'r') as f:
+    # read csv with delimiter \t
+    file = csv.reader(f, delimiter='\t')
+    lines = [line for line in file]
 
 
 def pregunta_01():
@@ -21,8 +31,12 @@ def pregunta_01():
     214
 
     """
-    return
 
+    second_colum = [(int(line[1])) for line in lines]
+    Sum = sum(second_colum)
+        
+    return Sum
+# print(pregunta_01())
 
 def pregunta_02():
     """
@@ -39,8 +53,15 @@ def pregunta_02():
     ]
 
     """
-    return
+    dict = {}
+    for line in lines:
+        dict[line[0]] = dict.get(line[0], 0) + 1
+    
+    list = [(key, value) for key, value in dict.items()]
+    list = sorted(list, key=lambda x: x[0])
 
+    return list
+# print(pregunta_02())
 
 def pregunta_03():
     """
@@ -57,8 +78,15 @@ def pregunta_03():
     ]
 
     """
-    return
+    dict = {}
+    for line in lines:
+        dict[line[0]] = dict.get(line[0], 0) + int(line[1])
+    
+    list = [(key, value) for key, value in dict.items()]
+    list = sorted(list, key=lambda x: x[0])
 
+    return list
+# print(pregunta_03())
 
 def pregunta_04():
     """
@@ -82,8 +110,16 @@ def pregunta_04():
     ]
 
     """
-    return
+    dict = {}
+    for line in lines:
+        month = line[2].split('-')[1]
+        dict[month] = dict.get(month, 0) + 1
+    
+    list = [(key, value) for key, value in dict.items()]
+    list = sorted(list, key=lambda x: x[0])
 
+    return list
+# print(pregunta_04())
 
 def pregunta_05():
     """
@@ -100,7 +136,16 @@ def pregunta_05():
     ]
 
     """
-    return
+    dict = {}
+    for line in lines:
+        dict[line[0]] = dict.get(line[0], [])
+        dict[line[0]].append(int(line[1]))
+
+    list = [(key, max(value), min(value)) for key, value in dict.items()]
+    list = sorted(list, key=lambda x: x[0])
+
+    return list
+# print(pregunta_05())
 
 
 def pregunta_06():
@@ -125,8 +170,19 @@ def pregunta_06():
     ]
 
     """
-    return
+    dict = {}
+    for line in lines:
+        pairs = line[4].split(',')
+        for pair in pairs:
+            key, value = pair.split(":")
+            dict[key] = dict.get(key, [])
+            dict[key].append(int(value))
 
+    list = [(key, min(value), max(value)) for key, value in dict.items()]
+    list = sorted(list, key=lambda x: x[0])
+
+    return list
+# print(pregunta_06())
 
 def pregunta_07():
     """
@@ -149,8 +205,16 @@ def pregunta_07():
     ]
 
     """
-    return
+    dict = {}
+    for line in lines:
+        dict[line[1]] = dict.get(line[1], []) 
+        dict[line[1]].append(line[0])
+    
+    list = [(int(key), value) for key, value in dict.items()]
+    list = sorted(list, key=lambda x: x[0])
 
+    return list
+# print(pregunta_07())
 
 def pregunta_08():
     """
@@ -174,8 +238,16 @@ def pregunta_08():
     ]
 
     """
-    return
+    dict = {}
+    for line in lines:
+        dict[line[1]] = dict.get(line[1], set()) 
+        dict[line[1]].add(line[0])
+    
+    list = [(int(key), sorted(value, key=lambda x: x[0])) for key, value in dict.items()]
+    list = sorted(list, key=lambda x: x[0])
 
+    return list
+# print(pregunta_08())
 
 def pregunta_09():
     """
@@ -197,8 +269,19 @@ def pregunta_09():
     }
 
     """
-    return
+    dict = {}
+    for line in lines:
+        pairs = line[4].split(',')
+        for pair in pairs:
+            key, _ = pair.split(":")
+            dict[key] = dict.get(key, 0) + 1
 
+    list = [(key, value) for key, value in dict.items()]
+    list = sorted(list, key=lambda x: x[0])
+    dict = {key: value for key, value in list}
+
+    return dict
+# print(pregunta_09())
 
 def pregunta_10():
     """
@@ -216,10 +299,13 @@ def pregunta_10():
         ("E", 3, 3),
     ]
 
-
     """
-    return
-
+    list = []
+    for line in lines:
+        list.append((line[0], len(line[3].split(',')), len(line[4].split(','))))
+    
+    return list
+# print(pregunta_10())
 
 def pregunta_11():
     """
@@ -236,10 +322,20 @@ def pregunta_11():
         "f": 134,
         "g": 35,
     }
-
-
     """
-    return
+    dict = {}
+    for line in lines:
+        pairs = line[3].split(',')
+        for key in pairs:
+            dict[key] = dict.get(key, 0) + int(line[1])
+
+    list = [(key, value) for key, value in dict.items()]
+    list = sorted(list, key=lambda x: x[0])
+    dict = {key: value for key, value in list}
+
+    
+    return dict
+# print(pregunta_11())
 
 
 def pregunta_12():
@@ -257,4 +353,16 @@ def pregunta_12():
     }
 
     """
-    return
+    dict = {}
+    for line in lines:
+        pairs = line[4].split(',')
+        for pair in pairs:
+            _, value = pair.split(":")
+            dict[line[0]] = dict.get(line[0], 0) + int(value)
+
+    list = [(key, value) for key, value in dict.items()]
+    list = sorted(list, key=lambda x: x[0])
+    dict = {key: value for key, value in list}
+
+    return dict
+# print(pregunta_12())
